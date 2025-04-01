@@ -1,3 +1,6 @@
+"""A Post Office class. Allows users to message each other."""
+
+
 class PostOffice:
     """A Post Office class. Allows users to message each other.
 
@@ -53,7 +56,7 @@ class PostOffice:
             Returns:
             - List of message dictionaries.
         """
-        if not user in self.boxes:
+        if not self.boxes[user]:
             raise KeyError("User does not exist.")
         user_box = self.boxes[user]
         if n == 0 or n == len(user_box):
@@ -77,7 +80,7 @@ class PostOffice:
             - List of messages that contain the keyword.
             Prints an error if the user does not exist.
         """
-        if not username in self.boxes:
+        if not self.boxes[username]:
             print("User does not exist.")
             return []
 

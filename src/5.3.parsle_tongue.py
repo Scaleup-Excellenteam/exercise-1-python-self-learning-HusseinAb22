@@ -1,12 +1,12 @@
+"""
+Reads a binary file, decodes it as ASCII, and extracts lowercase words.
+
+Yields lowercase words that are at least 5 characters long and end with '!'.
+Non-lowercase sequences are ignored. If the file is missing, prints an error message.
+"""
+
 
 def parsle_tongue():
-    """
-    Reads a binary file, decodes it as ASCII, and extracts lowercase words.
-
-    Yields lowercase words that are at least 5 characters long and end with '!'.
-    Non-lowercase sequences are ignored. If the file is missing, prints an error message.
-    """
-
     try:
         with open(r"./logo.jpg", 'rb') as file:
             combined = file.read()

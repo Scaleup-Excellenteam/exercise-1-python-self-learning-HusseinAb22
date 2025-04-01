@@ -1,17 +1,17 @@
+"""
+Measures and returns the execution time (in seconds) of any given function.
+
+Parameters:
+- func: The function to execute.
+- *args, **kwargs: Arguments and keyword arguments to pass to the function.
+
+Returns:
+- float: The time taken to execute the function.
+"""
 import time
 
 
 def running_2000(func, *args, **kwargs):
-    """
-    Measures and returns the execution time (in seconds) of any given function.
-
-    Parameters:
-    - func: The function to execute.
-    - *args, **kwargs: Arguments and keyword arguments to pass to the function.
-
-    Returns:
-    - float: The time taken to execute the function.
-    """
     start_time = time.time()
     func(*args, **kwargs)
     return time.time() - start_time

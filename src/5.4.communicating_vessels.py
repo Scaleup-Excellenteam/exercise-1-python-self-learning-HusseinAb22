@@ -1,10 +1,12 @@
-def interleave(*iterables):
-    """
-    Takes multiple iterables and returns a list of their elements interleaved in round-robin order.
+"""
+Takes multiple iterables and returns a list of their elements interleaved in round-robin order.
 
-    Each element is taken one-by-one from each iterable in sequence.
-    Iterables that are exhausted are skipped in the next rounds.
-    """
+Each element is taken one-by-one from each iterable in sequence.
+Iterables that are exhausted are skipped in the next rounds.
+"""
+
+
+def interleave(*iterables):
     iterators = [iter(it) for it in iterables]
     result = []
 
