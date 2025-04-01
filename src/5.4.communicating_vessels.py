@@ -1,15 +1,22 @@
 """
-Takes multiple iterables and returns a list of their elements interleaved in round-robin order.
+Provides two functions to interleave multiple iterables in a round-robin fashion.
 
-Each element is taken one-by-one from each iterable in sequence.
-Iterables that are exhausted are skipped in the next rounds.
+- `interleave`: Returns a list of elements from all iterables interleaved together.
+- `generator_interleave`: Yields elements from all iterables interleaved one by one.
 """
 
 
 def interleave(*iterables):
+    """
+    Returns a list of elements taken in round-robin order from the given iterables.
+    Args:
+        *iterables: Any number of iterable objects.
+    Returns:
+        list: A list containing elements interleaved from the input iterables.
+
+    """
     iterators = [iter(it) for it in iterables]
     result = []
-
     while iterators:
         next_round = []
         for it in iterators:
@@ -25,13 +32,13 @@ def interleave(*iterables):
 def generator_interleave(*iterables):
     """
     A generator version of `interleave` that yields elements in round-robin order from multiple iterables.
+    Args:
+        *iterables: Any number of iterable objects.
+    Yields:
+        Elements from the input iterables interleaved in round-robin order.
 
-    Iterables are processed one item at a time.
-    Once an iterable is exhausted, it’s skipped in future rounds.
-    Useful for memory-efficient iteration.
     """
     iterators = [iter(it) for it in iterables]
-
     while iterators:
         next_round = []
         for it in iterators:

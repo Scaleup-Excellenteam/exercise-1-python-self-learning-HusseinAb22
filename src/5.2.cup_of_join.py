@@ -1,11 +1,20 @@
 """
-This function takes one or more lists as input and flattens them into a single list.
-If a separator is provided, it is added after each inner list.
-If no lists are given, the function returns None.
+This module contains a function that flattens multiple lists into a single list.
+Optionally, a separator can be added between each inner list.
 """
 
 
 def cup_of_join(*matrix, sep=None):
+    """
+    Flattens one or more lists into a single list.
+    Optionally inserts a separator between the inner lists.
+    Args:
+        *matrix: One or more lists to flatten.
+        sep (optional): An item to insert between each list.
+    Returns:
+        list or None: The flattened list with optional separators, or None if no lists are provided.
+
+    """
     if not matrix:
         return None
     cup = []

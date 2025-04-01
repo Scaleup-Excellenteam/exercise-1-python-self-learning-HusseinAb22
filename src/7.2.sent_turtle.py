@@ -1,34 +1,46 @@
-"""A Post Office class. Allows users to message each other."""
+"""A module defining a Post Office class for user-to-user messaging."""
 
 
 class PostOffice:
-    """A Post Office class. Allows users to message each other.
+    """
+    A Post Office class that allows users to message each other.
 
-    :ivar int message_id: Incremental id of the last message sent.
-    :ivar dict boxes: Users' inboxes.
-
-    :param list usernames: Users for which we should create PO Boxes.
+    Attributes:
+        message_id (int): Incremental ID of the last message sent.
+        boxes (dict): Dictionary mapping usernames to their inboxes.
     """
 
     def __init__(self, usernames):
+        """
+        Initializes the Post Office with mailboxes for given usernames.
+
+        Args:
+            usernames (list): A list of usernames to create PO boxes for.
+        """
         self.message_id = 0
         self.boxes = {user: [] for user in usernames}
 
     def send_message(self, sender, recipient, title, message_body, urgent=False):
-        """Send a message to a recipient.
-        :param str sender: The message sender's username.
-        :param str recipient: The message recipient's username.
-        :param title: the title of the message
-        :param str message_body: The body of the message.
-        :param urgent: The urgency of the message.
-        :type urgent: bool, optional
-        :return: The message ID, auto incremented number.
-        :rtype: int
-        :raises KeyError: if the recipient does not exist.
         """
-        user_box = self.boxes[recipient]
-        self.message_id = self.message_id + 1
+        Sends a message to a recipient.
 
+        Args:
+            sender (str): The message sender's username.
+            recipient (str): The recipient's username.
+            title (str): The title of the message.
+            message_body (str): The message content.
+            urgent (bool, optional): If True, message is inserted at the beginning.
+
+        Returns:
+            int: Auto-incremented message ID.
+
+        Raises:
+            KeyError: If the recipient does not exist.
+        """
+        if recipient not in self.boxes:
+            raise KeyError(f"Recipient '{recipient}' does not exist.")
+
+        self.message_id += 1
         message_details = {
             'id': self.message_id,
             'body': message_body,
@@ -37,52 +49,60 @@ class PostOffice:
             'title': title,
             'urgent': urgent
         }
+
         if urgent:
-            user_box.insert(0, message_details)
+            self.boxes[recipient].insert(0, message_details)
         else:
-            user_box.append(message_details)
+            self.boxes[recipient].append(message_details)
+
         return self.message_id
 
     def read_inbox(self, user, n=0):
         """
-            Reads messages from a user's inbox.
+        Reads messages from a user's inbox and marks them as read.
 
-            Parameters:
-            - user (str): The username whose inbox will be accessed.
-            - n (int): Number of recent messages to return (0 returns all).
+        Args:
+            user (str): Username of the mailbox to read.
+            n (int): Number of messages to return (0 = all messages).
 
-            Marks returned messages as read (`unread = False`).
+        Returns:
+            list: A list of message dictionaries.
 
-            Returns:
-            - List of message dictionaries.
+        Raises:
+            KeyError: If the user does not exist.
         """
-        if not self.boxes[user]:
-            raise KeyError("User does not exist.")
+        if user not in self.boxes:
+            raise KeyError(f"User '{user}' does not exist.")
+
         user_box = self.boxes[user]
-        if n == 0 or n == len(user_box):
-            for message in user_box:
-                message['unread'] = False
-            return user_box
-        msg = user_box[:n+1]
-        for message in user_box[:n+1]:
+
+        if n == 0:
+            messages = user_box
+        else:
+            messages = user_box[:n]
+
+        for message in messages:
             message['unread'] = False
-        return msg
+
+        return messages
 
     def search_inbox(self, username, word):
         """
-            Searches for a keyword in a user's inbox messages.
+        Searches a user's inbox for messages containing a specific word.
 
-            Parameters:
-            - username (str): The user's name.
-            - word (str): The keyword to search for in message bodies or titles.
+        Args:
+            username (str): The username whose inbox to search.
+            word (str): The word to search for in titles or bodies.
 
-            Returns:
-            - List of messages that contain the keyword.
-            Prints an error if the user does not exist.
+        Returns:
+            list: List of messages containing the keyword.
         """
-        if not self.boxes[username]:
+        if username not in self.boxes:
             print("User does not exist.")
             return []
 
         word = word.lower()
-        return [msg for msg in self.read_inbox(username) if word in msg['body'].lower() or word in msg['title'].lower()]
+        return [
+            msg for msg in self.read_inbox(username)
+            if word in msg['body'].lower() or word in msg['title'].lower()
+        ]

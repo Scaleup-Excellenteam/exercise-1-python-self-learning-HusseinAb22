@@ -1,20 +1,29 @@
 """
 Groups elements of an iterable based on the result of a given function.
-
-Parameters:
-- func: A function to classify each item.
-- iterable: A list or other iterable of values to group.
-
-Returns:
-- dict: A dictionary where each key is a result of `func`, and the value is a list of items matching that result.
+Each element is passed through the function, and grouped by its return value.
+Example:
+    group_by(len, ["hi", "bye", "yo", "try"])
+    => {2: ['hi', 'yo'], 3: ['bye', 'try']}
 """
 
 
 def group_by(func, iterable):
-    result = {func(value): [word for word in iterable if func(word) == func(value)] for value in iterable}
-    print(result)
+    """
+    Groups items in an iterable by the result of applying a function to each item.
+    Args:
+        func (callable): Function used to classify items.
+        iterable (iterable): A collection of items to group.
+    Returns:
+        dict: A dictionary with keys from `func(item)` and values as lists of matching items.
+    """
+    result = {}
+    for item in iterable:
+        key = func(item)
+        if key not in result:
+            result[key] = []
+        result[key].append(item)
     return result
 
 
 if __name__ == '__main__':
-    group_by(len, ["hi", "bye", "yo", "try"])
+    print(group_by(len, ["hi", "bye", "yo", "try"]))

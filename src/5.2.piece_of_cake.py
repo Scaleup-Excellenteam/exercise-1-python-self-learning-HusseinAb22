@@ -1,25 +1,32 @@
 """
 Calculates the total cost of bought items, excluding optional ones.
-
-- `prices`: dict of item prices per 100g
-- `optionals`: list of items to exclude
-- `**bought_items`: items and their quantities in grams
-
-Returns the total cost as an integer.
+The cost is based on prices per 100g.
+Optional items are excluded from the total.
 """
 
 
 def piece_of_cake(prices, optionals=None, **bought_items):
+    """
+    Calculates total price for bought items, excluding optionals.
+    Args:
+        prices (dict): A dictionary of item prices per 100 grams.
+        optionals (list, optional): A list of item names to exclude.
+        **bought_items: Keyword arguments of item names and their weights in grams.
+    Returns:
+        int: Total cost of the items (rounded down to integer).
+    """
+    if optionals is None:
+        optionals = []
     checkout = 0
-    for item, price in bought_items.items():
-        if item not in optionals and item in bought_items:
-            checkout += int((price/100) * prices[item])
+    for item, grams in bought_items.items():
+        if item not in optionals:
+            checkout += int((grams / 100) * prices.get(item, 0))
     return checkout
 
 
 if __name__ == '__main__':
     print(piece_of_cake(
-            prices={'milk': 20, 'chocolate': 18},
-            optionals=['milk'],
-            milk=200,
-            chocolate=100))
+        prices={'milk': 20, 'chocolate': 18},
+        optionals=['milk'],
+        milk=200,
+        chocolate=100))

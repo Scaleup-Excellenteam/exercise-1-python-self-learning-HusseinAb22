@@ -1,26 +1,32 @@
 """
-    This function takes two dates as input, converts them to epoch timestamps,
-    generates a random timestamp between them, converts it back to a date,
-    and checks if the resulting date falls on a Monday.
-    If it does, it prints a specific message.
+This module contains a function that generates a random date between two input dates
+and prints a message if the random date does not fall on a Monday.
 """
+
 import random as rnd
 import datetime
 
 
 def no_vinnigrete(input_date1, input_date2):
-    """ changing the first  date to date format then epoch format"""
+    """
+    Generates a random date between two given dates and checks if it falls on a Monday.
+
+    Args:
+        input_date1 (str): The first date in YYYY-MM-DD format.
+        input_date2 (str): The second date in YYYY-MM-DD format.
+
+    Prints:
+        A message if the generated random date is not a Monday.
+    """
     date1 = datetime.datetime.strptime(input_date1, "%Y-%m-%d")
-    epoch1 = int(date1.timestamp())
-    """ changing the first  date to date format then epoch format"""
     date2 = datetime.datetime.strptime(input_date2, "%Y-%m-%d")
+    epoch1 = int(date1.timestamp())
     epoch2 = int(date2.timestamp())
-    if epoch1 < epoch2:
-        random_epoch = rnd.randint(epoch1, epoch2)
-    else:
-        random_epoch = rnd.randint(epoch2, epoch1)
+    if epoch1 > epoch2:
+        epoch1, epoch2 = epoch2, epoch1
+    random_epoch = rnd.randint(epoch1, epoch2)
     random_date = datetime.datetime.fromtimestamp(random_epoch)
-    if not random_date.weekday() == 0:
+    if random_date.weekday() != 0:
         print("Ain't gettin' no vinaigrette today :(")
 
 

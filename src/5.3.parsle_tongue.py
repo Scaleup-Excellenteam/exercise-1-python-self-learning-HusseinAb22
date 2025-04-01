@@ -1,31 +1,35 @@
 """
 Reads a binary file, decodes it as ASCII, and extracts lowercase words.
-
 Yields lowercase words that are at least 5 characters long and end with '!'.
 Non-lowercase sequences are ignored. If the file is missing, prints an error message.
 """
 
 
 def parsle_tongue():
+    """
+    Extracts lowercase words from a binary file decoded as ASCII.
+    Yields:
+        str: Lowercase word (≥5 characters) that ends with an exclamation mark.
+    Side effects:
+        Prints an error if the file is not found.
+    """
     try:
-        with open(r"./logo.jpg", 'rb') as file:
-            combined = file.read()
-            text = combined.decode('ascii', errors='ignore')
-            current = ""
-            for char in text:
+        with open("./logo.jpg", 'rb') as file:
+            ascii_text = file.read().decode('ascii', errors='ignore')
+            current_word = ""
+            for char in ascii_text:
                 if char.islower():
-                    current += char
+                    current_word += char
                 elif char == '!':
-                    if len(current) >= 5:
-                        yield current
-                    current = ""
+                    if len(current_word) >= 5:
+                        yield current_word
+                    current_word = ""
                 else:
-                    current = ""
+                    current_word = ""
     except FileNotFoundError:
         print("File not found")
 
 
 if __name__ == '__main__':
-
-    for line in parsle_tongue():
-        print(line)
+    for word in parsle_tongue():
+        print(word)
