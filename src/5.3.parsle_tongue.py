@@ -13,18 +13,18 @@ def parsle_tongue():
     Side effects:
         Prints an error if the file is not found.
     """
-        with open("./logo.jpg", 'rb') as file:
-            ascii_text = file.read().decode('ascii', errors='ignore')
-            current_word = ""
-            for char in ascii_text:
-                if char.islower():
-                    current_word += char
-                elif char == '!':
-                    if len(current_word) >= 5:
-                        yield current_word
-                    current_word = ""
-                else:
-                    current_word = ""
+    with open("./logo.jpg", 'rb') as file:
+        ascii_text = file.read().decode('ascii', errors='ignore')
+        current_word = ""
+        for char in ascii_text:
+            if char.islower():
+                current_word += char
+            elif char == '!':
+                if len(current_word) >= 5:
+                    yield current_word
+                current_word = ""
+            else:
+                current_word = ""
 
 
 if __name__ == '__main__':
