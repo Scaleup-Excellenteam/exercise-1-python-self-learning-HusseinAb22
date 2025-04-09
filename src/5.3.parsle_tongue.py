@@ -13,7 +13,6 @@ def parsle_tongue():
     Side effects:
         Prints an error if the file is not found.
     """
-    try:
         with open("./logo.jpg", 'rb') as file:
             ascii_text = file.read().decode('ascii', errors='ignore')
             current_word = ""
@@ -26,8 +25,6 @@ def parsle_tongue():
                     current_word = ""
                 else:
                     current_word = ""
-    except FileNotFoundError:
-        print("File not found")
 
 
 if __name__ == '__main__':
