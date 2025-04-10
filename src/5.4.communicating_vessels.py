@@ -28,10 +28,10 @@ def generator_interleave(*iterables):
         Elements from the input iterables interleaved in round-robin order.
 
     """
-       for group in zip_longest(*iterables):
-        for item in group:
-            if item is not None:
-                yield item
+   for group in zip_longest(*iterables):
+    for item in group:
+        if item is not None:
+            yield item
                 
 
 if __name__ == '__main__':
