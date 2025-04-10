@@ -49,4 +49,3 @@ def valid_date():
 
 if __name__ == '__main__':
     valid_date()
-
