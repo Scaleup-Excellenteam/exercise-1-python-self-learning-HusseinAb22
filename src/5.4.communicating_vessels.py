@@ -29,9 +29,9 @@ def generator_interleave(*iterables):
 
     """
    for group in zip_longest(*iterables):
-    for item in group:
-        if item is not None:
-            yield item
+       for item in group:
+           if item is not None:
+               yield item
                 
 
 if __name__ == '__main__':
