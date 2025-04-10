@@ -14,11 +14,11 @@ def running_2000(func, *args, **kwargs):
         *args: Positional arguments to pass to the function.
         **kwargs: Keyword arguments to pass to the function.
     Returns:
-        float: The time taken (in seconds) to execute the function.
+        float: The time taken (in ms) to execute the function.
     """
     start_time = time.time()
     func(*args, **kwargs)
-    return time.time() - start_time
+    return (time.time() - start_time)*1000
 
 
 if __name__ == '__main__':
