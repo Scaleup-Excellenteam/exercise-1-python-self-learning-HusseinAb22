@@ -24,8 +24,6 @@ def remember_remember(img_path):
         width, height = img.size
     except FileNotFoundError:
         return "Could not find the image file"
-    except Exception as e:
-        return f"Error opening the image {e}"
     width, height = img.size
     pixels = img.load()
     message = ""
