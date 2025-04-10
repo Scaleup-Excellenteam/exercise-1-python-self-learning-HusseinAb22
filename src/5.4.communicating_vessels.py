@@ -4,6 +4,7 @@ Provides two functions to interleave multiple iterables in a round-robin fashion
 - `interleave`: Returns a list of elements from all iterables interleaved together.
 - `generator_interleave`: Yields elements from all iterables interleaved one by one.
 """
+from itertools import zip_longest
 
 
 def interleave(*iterables):
@@ -15,18 +16,7 @@ def interleave(*iterables):
         list: A list containing elements interleaved from the input iterables.
 
     """
-    iterators = [iter(it) for it in iterables]
-    result = []
-    while iterators:
-        next_round = []
-        for it in iterators:
-            try:
-                result.append(next(it))
-                next_round.append(it)
-            except StopIteration:
-                continue
-        iterators = next_round
-    return result
+    return [item for group in zip_longest(*iterables, fillvalue=None) for item in group if item is not None]
 
 
 def generator_interleave(*iterables):
@@ -38,17 +28,11 @@ def generator_interleave(*iterables):
         Elements from the input iterables interleaved in round-robin order.
 
     """
-    iterators = [iter(it) for it in iterables]
-    while iterators:
-        next_round = []
-        for it in iterators:
-            try:
-                yield next(it)
-                next_round.append(it)
-            except StopIteration:
-                continue
-        iterators = next_round
-
+       for group in zip_longest(*iterables):
+        for item in group:
+            if item is not None:
+                yield item
+                
 
 if __name__ == '__main__':
     lst = list(interleave('ab', [1, 2, 3], ('!', '@')))
