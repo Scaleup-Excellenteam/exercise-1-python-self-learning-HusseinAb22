@@ -14,7 +14,6 @@ def interleave(*iterables):
         *iterables: Any number of iterable objects.
     Returns:
         list: A list containing elements interleaved from the input iterables.
-
     """
     return [item for group in zip_longest(*iterables, fillvalue=None) for item in group if item is not None]
 
@@ -26,7 +25,6 @@ def generator_interleave(*iterables):
         *iterables: Any number of iterable objects.
     Yields:
         Elements from the input iterables interleaved in round-robin order.
-
     """
     for group in zip_longest(*iterables):
         for item in group:
